@@ -66,7 +66,7 @@ def update_reports(id):
     report = Reports.query.get(id)
 
     title = request.json['title']
-    body = request.json['nbody']
+    body = request.json['body']
 
     report.title = title
     report.body = body

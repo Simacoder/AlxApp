@@ -3,15 +3,18 @@ import pymysql
 pymysql.install_as_MySQLdb()
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow 
+from flask_marshmallow import Marshmallow
+from flask_cors import CORS 
 
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/flask'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 class Reports(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,7 +28,7 @@ class Reports(db.Model):
         self.body = body 
 
 
-class ReportSchema(Marshmallow.Schema):
+class ReportSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'body', 'date')
 
